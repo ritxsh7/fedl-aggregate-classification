@@ -42,10 +42,11 @@ model = create_model()
 model.compile(optimizer="adam", loss='categorical_crossentropy', metrics=['accuracy'])
 
 # Define strategy
-strategy = fl.server.strategy.FedAvg(evaluate_fn=get_eval_fn(model))
+strategy = fl.server.strategy.FedAvg(evaluate_fn=get_eval_fn(model), min_available_clients = 3)
 
 # Start Flower server
 fl.server.start_server(
+
     config=fl.server.ServerConfig(num_rounds=3),
     strategy=strategy
 )
